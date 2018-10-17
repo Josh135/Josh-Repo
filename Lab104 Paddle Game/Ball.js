@@ -1,8 +1,4 @@
-/*
-**  Ball Constructor Function
-**  yoName
-**  Aug 20, 2018
-*/
+
 function Ball(location, velocity, radius, col){
     this.loc = location;
     this.vel = velocity;
