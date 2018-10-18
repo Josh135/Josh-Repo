@@ -1,48 +1,72 @@
-//  Global variables
-var balls = [];
-var paddle
-// seting up project
-function setup() {
+//Global variables
+var Balls = [];
+var paddle;
+var score = 0;
+//setup canvas
+function setup(){
   var cnv = createCanvas(800, 800);
   cnv.position((windowWidth-width)/2, 30);
-  background(random(20,250), random(20,250), random(20,250)); // draws canvas
-  loadBalls(2);  // loads balls
-  paddle = new Paddle(createVector(0, 0),
-                      33,
-                      color(random(255), random(255), random(255)))
+  background(20, 20, 20);
+  //# of boids loaded
+  numBalls = 10;
+  loadBalls(numBalls);
+  //
+  //creating the lerping paddle
+  //
+  var loc = createVector(400, 550)
+  var vel = createVector(0, 0);
+  var width = 250;
+  var length = 20;
+  var col = color(random(0, 255), random(0, 255), random(0, 255))
+  paddle = new Paddle(loc, vel, width, length, col);
 }
 //
-function draw() {
-  background(0,0,0);
-  paddle.run();
-  for(var i = 0; i < balls.length; i = i + 1){
-    balls[i].run()
-  }
-  //getting rid of the boids
-  var a = balls[i]
-  var x = a.loc.x
-  var y = a.loc.y
-  for (var i = balls.length - 1; i >= 0; i--){
-    if(paddle.loc.x < x
-      && x < paddle.loc.x+w
-      && y < paddle.loc.y)
-    {
-      balls.splice(i, 1);
-
-  }
- }
-}
-//loading the balls
+//load balls
+//
 function loadBalls(numBalls){
-//creating the balls
-    for(var i = 0; i < numBalls; i++){
-        var loc = createVector(random(width), random(100, 200));
-        var vel = createVector(random(-3,3), random(-3,3));
-        var radius = random(30,30);
-        var col = color(random(255), random(255), random(255));
-        var b = new Ball(loc, vel, radius, col);
-        balls.push(b);
+  for(var i = 0; i < numBalls; i++){
+    //where the balls are spawned in
+    var loc = createVector(random(100, 600), 20);
+    var vel = createVector(random(-5, 5), random(-5, 5));
+    var rad = 25
+    var col = color(random(0, 255), random(0, 255), random(0, 255));
+    var sp = 3
+    var b = new Ball(loc, vel, rad, col, sp);
+    //add balls to the array
+    Balls.push(b);
+  }
+}
 
+
+//draw boids + mouse controlled ball
+function draw(){
+  background(20, 20, 20, 6000);
+  //control the score
+  textSize(32);
+  fill(255, 255, 255);
+  text(score, 400, 400)
+  //get rid of outlines
+  noStroke();
+  paddle.run();
+  for(var i = 0; i < Balls.length; i++){
+    Balls[i].run();
+    var aBalls = Balls[i];
+    //splice the balls if they have touched the top of the paddle
+    if(aBalls.sp == 1){
+      Balls.splice(i,1);
+      //adds to score for every ball
+      score = score + 1;
     }
-    console.log(balls);
+    //"reset" the balls if a ball hits the buttom
+    if(aBalls.sp == 2){
+      //decides how many balls are going to be in the next "reset"
+      var numBalls = Balls.length + 5;
+      //resets the array (deleted all the current balls)
+      Balls = []
+      loadBalls(numBalls)
+      for(var i = 0; i < Balls.length; i++){
+        Balls[i].run;
+      }
+    }
+  }
 }
