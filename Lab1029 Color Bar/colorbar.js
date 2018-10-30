@@ -2,16 +2,20 @@
 Period 1
 Lab Color S0rt*/
 
-var bars = [];
+function colorbar(loc, w, h, clr, clrAvg){
+  this.loc = loc;
+  this.w = w;
+  this.h = h;
+  this.clr = clr;
+  this.clrAvg = clrAvg;
 
-function setup() {
-  bubbleSort(txt);
+  this.run = function(){
+    this.render();
+  }
+
+  this.render = function(){
+    fill(this.clr);
+    rect(this.loc.x, this.loc.y, this.w, this.h);
+  }
+
 }
-
-function draw() {
-}
-
-function bubbleSort(bars) {
-  var length = bar.length;
-  for (var i = 0; i < length; i++) {
-    for (var j = 0; j < (length - i - 1)

@@ -1,44 +1,50 @@
+//RGB values
 
-function Boid(loc, vel, col){
-  // Instance variables
-  this.loc = loc;
-  this.vel = vel;
-  this.col = col;
-  //this function calls other functions
-  this.run = function(){
-    this.checkEdges();
-    this.update();
-    this.render();
-  }
-  //changes the balls location
-  //by adding speed to x and y
-  this.update = function(){
-    if(this !== chaser)
-      var d = this.loc.dist(chaser.loc);
-      if(d < 75){
-        var repForce = p5.Vector.sub(this.loc, chaser.loc);
-        repForce.normalize();
-        repForce.mult(1);
-        this.vel.add(repForce);
-      }
+var Bars = [];
 
-    this.loc.add(this.vel);
-  }
-  //checkEdges() reverses speed when the ball touches an edge
-  this.checkEdges = function(){
-    if(this.loc.x < 0) this.vel.x = -this.vel.x;
-    if(this.loc.x > width) this.vel.x = -this.vel.x;
-    if(this.loc.y < 0) this.vel.y = -this.vel.y;
-    if(this.loc.y > height) this.vel.y = -this.vel.y;
-  }
+function setup() {
+  var cnv = createCanvas(800, 800);
+  cnv.position((windowWidth-width)/2, 30);
+  background(255, 255, 255);
+  numBars = 150;
+  loadBars(numBars);
+  bubbleSort(Bars);
+}
 
-  //render() draws the ball at the new location
-  this.render = function(){
-    fill(this.col);
-    push()
-      translate(this.loc.x, this.loc.y);
-      rotate(this.vel.heading() + radians(90));
-      triangle(-5, 0, 5, 0, 0, -15);
-    pop()
+function draw() {
+  background(255, 255, 255, 6000);
+  noStroke();
+  for(var i = 0; i < Bars.length; i++){
+    Bars[i].run();
   }
+}
+
+function loadBars(numBars){
+  for(var i = 0; i < numBars; i++){
+    var w = 800/numBars;
+    var h = 250;
+    var loc = createVector(0+(w*i), 150);
+    var red = random(0, 255);
+    var green = random(0, 255);
+    var blue = random(0, 255);
+    var clr = color(red, green, blue);
+    var clrAvg = (red + green+ blue)/3;
+    var bar = new colorbar(loc, w, h, clr, clrAvg);
+    Bars.push(bar);
+  }
+}
+
+function bubbleSort(Bars) {
+    var length = Bars.length;
+    for (var i = 0; i < length; i++) {
+      for (var j = 0; j < (length - i - 1); j++) {
+        var a = Bars[j].clrAvg;
+        var b = Bars[j+1].clrAvg;
+        if(a > b) {
+          var temp = Bars[j];
+          Bars[j] = Bars[j+1];
+          Bars[j+1] = temp;
+            }
+        }
+    }
 }
