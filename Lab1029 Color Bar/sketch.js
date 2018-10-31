@@ -1,5 +1,5 @@
 //RGB values
-
+//my variables
 var Bars = [];
 
 function setup() {
@@ -10,7 +10,7 @@ function setup() {
   loadBars(numBars);
   bubbleSort(Bars);
 }
-
+//draw function
 function draw() {
   background(255, 255, 255, 6000);
   noStroke();
@@ -18,22 +18,22 @@ function draw() {
     Bars[i].run();
   }
 }
-
+//the peramiters and instructions of the color bars
 function loadBars(numBars){
   for(var i = 0; i < numBars; i++){
     var w = 800/numBars;
-    var h = 250;
+    var h = 500;
     var loc = createVector(0+(w*i), 150);
     var red = random(0, 255);
     var green = random(0, 255);
     var blue = random(0, 255);
     var clr = color(red, green, blue);
-    var clrAvg = (red + green+ blue)/3;
+    var clrAvg = (green);
     var bar = new colorbar(loc, w, h, clr, clrAvg);
     Bars.push(bar);
   }
 }
-
+//the bubble sort techniqe to sort the colors
 function bubbleSort(Bars) {
     var length = Bars.length;
     for (var i = 0; i < length; i++) {
