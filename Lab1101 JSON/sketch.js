@@ -1,23 +1,27 @@
 var data;
 var barHeight;
-var myArray;
+var txt;
 //  preload a large file
 function preload(){
-  data = loadJSON("USSenators.json");
+  data = loadJSON("population.json");
 }
 function setup(){
-  myArray=data.objects;
-   console.log(myArray[0].person.lastname);
+  txt=data.objects;
+
 }
 function bubbleSort(txt) {
   var length = txt.length;
   for (var i = 0; i < length; i++) {
     for (var j = 0; j < (length - i - 1); j++) {
-      if(txt[j].person.lastname > txt[j+1].person.lastname) {
-        var temp = txt[j].person.lastname;
-        txt[j].person.lastname = txt[j+1].person.lastname;
-        txt[j+1].person.lastname = temp;
+      if(txt[j].countrydata.males > txt[j+1].countrydata.males) {
+        var temp = txt[j];
+        txt[j] = txt[j+1];
+        txt[j+1] = temp;
       }
     }
   }
+}
+function draw(){
+  bubbleSort(txt);
+  console.log(txt);
 }
