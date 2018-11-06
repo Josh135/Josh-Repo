@@ -4,7 +4,7 @@ function preload(){
 }
 
 function setup() {
-  //remove blank black screen
+  //black screen is removed
   noCanvas();
   bubbleSort(data);
   console.log(data.countrydata)
@@ -15,20 +15,18 @@ function draw() {
 
 function bubbleSort(data) {
     var length = data.length;
-    //number of passes
+    //counts the number of passes
     for (var i = 0; i < length; i++) {
-        //notice that j < (length - i)
+        //l is less than length
         for (var j = 0; j < (length - i - 1); j++) {
-            //Compare the adjacent positions
+            //Cadjacent postions are paired
             var a = data[j].countrydata.country;
             var b = data[j+1].countrydata.country;
             if(data[j] > data[j+1]) {
-                //swap the numbers
-                //temperary variable
+                //numbers are swapped
                 var temp = data[j];
-                //replace current string with adjacent string
+                //replace the strings
                 data[j] = data[j+1];
-                //replace adjacent string with temp string (current string)
                 data[j+1] = temp;
             }
         }
