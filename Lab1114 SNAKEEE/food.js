@@ -1,16 +1,20 @@
-function Food(loc){
-//location of food
-  this.loc = loc;
-//the run function for the food
-  this.run = function(){
-    this.render();
+function Food() {
+  this.vec = randomVector().mult(scl);
+
+  this.x = function() {
+    return this.vec.x;
   }
 
-  this.render = function(){
-    noStroke();
+  this.y = function() {
+    return this.vec.y;
+  }
+
+  this.draw = function() {
     fill(255, 0, 0);
-    //perameters for the piece of food
-    rect(this.loc.x, this.loc.y, 20, 20);
+    rect(this.x(), this.y(), scl, scl);
   }
 
+  this.eaten = function() {
+    this.vec = randomVector().mult(scl);
+  }
 }

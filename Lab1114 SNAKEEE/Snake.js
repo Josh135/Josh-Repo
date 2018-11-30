@@ -1,29 +1,63 @@
 /*Josh Peterson
 Period 1*/
 //snake function (allows snake to do what i say)
-function Snake(loc, vel){
-  this.loc = loc;
-  this.vel = vel;
-  this.segments = [];
-  this.segments.push(createVector(0, 0));
-//run function
-  this.run = function(){
-    this.update();
-    this.render();
-  }
-//update function
-  this.update = function(){
-    this.segments[0].x = this.loc.x;
-    this.segments[0].x = this.loc.y;
-    this.loc.add(this.vel);
-    this.loc.x = constrain(this.loc.x, 0, 800-20)
-    this.loc.y = constrain(this.loc.y, 0, 800-20)
-  }
-//perameters for snake
-  this.render = function(){
-    noStroke();
-    fill(0, 255, 0);
-    rect(this.loc.x, this.loc.y, 20, 20);
+function Snake() {
+  this.x = cols()/2 * scl;
+  this.y = rows()/2 * scl;
+  this.xspeed = -1;
+  this.yspeed = 0;
+  this.tail = [];
+  this.points = 0;
+
+  this.dir = function(x, y) {
+    if (x != 0 && this.xspeed != x * (-1)
+        || y != 0 && this.yspeed != y * (-1)) {
+      this.xspeed = x;
+      this.yspeed = y;
+    }
   }
 
+  this.eat = function(food) {
+    if (this.x === food.x() && this.y === food.y()) {
+      food.eaten();
+      score = score + 1
+      this.tail.push(createVector(this.x, this.y));
+    }
+  }
+
+  this.move = function() {
+    // put last square of tail in front of the line
+    if (this.tail.length > 0) {
+      var tipOfTail = this.tail.pop();
+      tipOfTail.x = this.x;
+      tipOfTail.y = this.y;
+      this.tail.unshift(tipOfTail);
+    }
+
+    // move head
+    this.x += this.xspeed * scl;
+    this.y += this.yspeed * scl;
+
+    // wrap around right and bottom edges
+    this.x %= width;
+    this.y %= height;
+
+    // wrap around left and top edges
+    if (this.x < 0) {
+      this.x = width - scl;
+    }
+    if (this.y < 0) {
+      this.y = height - scl;
+    }
+  }
+
+  this.draw = function() {
+    fill(0, 255, 0);
+    rect(this.x, this.y, scl, scl);
+    for(var i = 0; i < this.tail.length; i++) {
+      rect(this.tail[i].x,
+          this.tail[i].y,
+          scl, scl);
+  }
+  }
 }
