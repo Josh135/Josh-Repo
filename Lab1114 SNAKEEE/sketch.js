@@ -19,12 +19,16 @@ function draw() {
   snake.draw();
   food.draw();
   Score();
+
+  if(location.x < 0){
+    this.dead = true
+  }
 }
 
 function Score(){
   if (score > 15){
     fill(255, 0, 255)
-    text("Yurrrr Kinda bad mate", 400, 400);
+    text("trash bro", 400, 400);
   }
 }
 
@@ -50,4 +54,13 @@ function rows() {
 
 function randomVector() {
   return createVector(floor(random(cols())), floor(random(rows())));
+}
+
+function dead() {
+  if(this.dead = true)
+  snake.vel = 0
+
+  rect(200,200,200)
+  fill(0, 255, 255)
+  text("bro why u bad main")
 }

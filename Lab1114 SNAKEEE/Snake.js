@@ -1,6 +1,7 @@
 /*Josh Peterson
 Period 1*/
 //snake function (allows snake to do what i say)
+var tipOfTail;
 function Snake() {
   this.x = cols()/2 * scl;
   this.y = rows()/2 * scl;
@@ -38,16 +39,16 @@ function Snake() {
     this.x += this.xspeed * scl;
     this.y += this.yspeed * scl;
 
-    // wrap around right and bottom edges
-    this.x %= width;
-    this.y %= height;
+    //wrap right and bottom edges
+    this.x = constrain(this.x, 0, width-scl);
+    this.y = constrain(this.y, 0, height-scl);
 
-    // wrap around left and top edges
-    if (this.x < 0) {
-      this.x = width - scl;
+    //wrap top and left edges
+    if(this.x < 0) {
+      this.x = constrain(this.x, 0, width-scl);
     }
-    if (this.y < 0) {
-      this.y = height - scl;
+    if(this.y < 0) {
+      this.y = constrain(this.y, 0, height-scl);
     }
   }
 
