@@ -1,66 +1,78 @@
-//  Global variables
-var scl = 20;
 var snake;
-var food;
-var score = 0;
+var food = [];
+var numSeg = 1;
 
-function setup() {
-  createCanvas(800, 800);
-  snake = new Snake();
-  food  = new Food();
+function setup(){
   frameRate(10);
+  var cnv = createCanvas(800, 800);
+  cnv.position((windowWidth-width)/2, 30);
+  background(20, 20, 20);
+  loadSnake();
+  loadFood(1);
 }
 
-function draw() {
-  background(0, 0, 0);
-  text(score , 50, 50);
-  snake.eat(food);
-  snake.move();
-  snake.draw();
-  food.draw();
-  Score();
+function draw(){
+  background(20, 20, 20);
+  snake.run();
 
-  if(location.x < 0){
-    this.dead = true
+  for(var i = 0; i < food.length; i++){
+    food[i].run();
+  }
+
+  checkLoc();
+  deadGame();
+}
+
+function checkLoc(){
+  for(var i = 0; i < food.length; i++){
+    var distX = food[i].loc.x - snake.loc.x;
+    var distY = food[i].loc.y - snake.loc.y;
+    if(distX == (0) && distY == (0)){
+      food.splice(i, 1);
+      loadFood(1);
+      snake.segments.push(createVector(0, 0));
+      console.log(snake.segments.length)
+    }
   }
 }
 
-function Score(){
-  if (score > 15){
-    fill(255, 0, 255)
-    text("trash bro", 400, 400);
+function loadSnake(){
+  var loc = createVector(200, 200);
+  var vel = createVector(0, 0);
+  snake = new Snake(loc, vel);
+}
+
+function loadFood(numFood){
+  for(var i = 0; i < numFood; i++){
+    var min = 1;
+    //40 * 20 = 800
+    var max = 39;
+    var locX = (Math.floor(Math.random() * (max - min + 1) + min)) * 20;
+    var locY = (Math.floor(Math.random() * (max - min + 1) + min)) * 20;
+    var loc = createVector(locX, locY);
+    var f = new Food(loc);
+    food.push(f);
   }
 }
 
-function keyPressed() {
-  if (keyCode === UP_ARROW) {
-    snake.dir(0, -1);
-  } else if (keyCode === DOWN_ARROW) {
-    snake.dir(0, 1);
-  } else if (keyCode === RIGHT_ARROW) {
-    snake.dir(1, 0);
-  } else if (keyCode === LEFT_ARROW) {
-    snake.dir(-1, 0);
+function keyPressed(){
+  if(keyCode === 38){
+    snake.vel = createVector(0, -20)
+  }
+  if(keyCode === 40){
+    snake.vel = createVector(0, 20)
+  }
+  if(keyCode === 39){
+    snake.vel = createVector(20, 0)
+  }
+  if(keyCode === 37){
+    snake.vel = createVector(-20, 0)
   }
 }
 
-function cols() {
-  return floor(width / scl);
-}
-
-function rows() {
-  return floor(height / scl);
-}
-
-function randomVector() {
-  return createVector(floor(random(cols())), floor(random(rows())));
-}
-
-function dead() {
-  if(this.dead = true)
-  snake.vel = 0
-
-  rect(200,200,200)
-  fill(0, 255, 255)
-  text("bro why u bad main")
+function deadGame(){
+  if(snake.status == "true"){
+    snake = 0
+    loadSnake();
+  }
 }
