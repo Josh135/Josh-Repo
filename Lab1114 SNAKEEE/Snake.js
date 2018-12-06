@@ -1,6 +1,7 @@
 /*Josh Peterson
 Period 1*/
 //snake function (allows snake to do what i say)
+
 function Snake(loc, vel){
 
   this.loc = loc;
@@ -31,10 +32,11 @@ function Snake(loc, vel){
 
   this.render = function(){
     for(var i = 0; i < this.segments.length; i++){
-      fill(175, 98, 211);
+      fill(0, 0, 0);
+      stroke(0, 225, 225);
       rect(this.segments[i].x, this.segments[i].y, 20, 20)
     }
-    fill(0, 0, 255);
+    fill(0, 0, 0);
     rect(this.loc.x, this.loc.y, 20, 20);
   }
 
