@@ -4,22 +4,24 @@ var numSeg = 1;
 var start = "true"
 var font;
 var score = 0;
-
+//setup function for code
 function setup(){
   textAlign(CENTER, CENTER);
-  frameRate(10);
+  frameRate(15);
   var cnv = createCanvas(800, 800);
   cnv.position((windowWidth-width)/2, 30);
   background(121, 139, 19);
   loadSnake();
   loadFood(1);
 }
-
+//draw function
 function draw(){
+  //color of background
   background(0, 225, 225);
   snake.run();
   fill(0, 255, 25)
   textSize(30);
+  //location of score
   text(score, 100, 100);
   for(var i = 0; i < food.length; i++){
     food[i].run();
@@ -36,6 +38,7 @@ function checkLoc(){
     var distX = food[i].loc.x - snake.loc.x;
     var distY = food[i].loc.y - snake.loc.y;
     if(distX == (0) && distY == (0)){
+      //splices food(gets rid of food and puts it in new location)
       food.splice(i, 1);
       loadFood(1);
       snake.segments.push(createVector(0, 0));
@@ -44,18 +47,19 @@ function checkLoc(){
     }
   }
 }
-
+//snake function
 function loadSnake(){
   var loc = createVector(200, 200);
   var vel = createVector(0, 0);
   snake = new Snake(loc, vel);
 }
-
+//food function
 function loadFood(numFood){
   for(var i = 0; i < numFood; i++){
     var min = 1;
     //40 * 20 = 800
     var max = 39;
+    //random location
     var locX = (Math.floor(Math.random() * (max - min + 1) + min)) * 20;
     var locY = (Math.floor(Math.random() * (max - min + 1) + min)) * 20;
     var loc = createVector(locX, locY);
@@ -63,7 +67,7 @@ function loadFood(numFood){
     food.push(f);
   }
 }
-
+//directions I move with arrow keys
 function keyPressed(){
   start = "false"
   if(keyCode === 38){
@@ -79,7 +83,7 @@ function keyPressed(){
     snake.vel = createVector(-20, 0)
   }
 }
-
+//what happens when i die
 function deadGame(){
   if(snake.status == "true"){
     snake = 0
@@ -88,7 +92,7 @@ function deadGame(){
     gameStart();
   }
 }
-
+//when game starts
 function gameStart(){
   if(start == "true"){
     textFont()
@@ -100,7 +104,7 @@ function gameStart(){
     text("Press any button to start", 400, 550)
   }
 }
-
+//score code
 function Score(){
   if (score > 19){
     fill(255, 200, 5);

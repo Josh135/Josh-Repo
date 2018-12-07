@@ -1,7 +1,7 @@
 /*Josh Peterson
 Period 1*/
 //snake function (allows snake to do what i say)
-
+//snake function
 function Snake(loc, vel){
 
   this.loc = loc;
@@ -14,7 +14,7 @@ function Snake(loc, vel){
     this.render();
     this.dead();
   }
-
+//update function
   this.update = function(){
     for(var i = this.segments.length - 1; i >= 0; i--){
       if(i > 0){
@@ -26,12 +26,14 @@ function Snake(loc, vel){
       }
     }
     this.loc.add(this.vel);
+    //walls block me off
     this.loc.x = constrain(this.loc.x, 0, 800-20)
     this.loc.y = constrain(this.loc.y, 0, 800-20)
   }
-
+//render function
   this.render = function(){
     for(var i = 0; i < this.segments.length; i++){
+      //snake color
       fill(0, 0, 0);
       stroke(0, 225, 225);
       rect(this.segments[i].x, this.segments[i].y, 20, 20)
@@ -39,7 +41,7 @@ function Snake(loc, vel){
     fill(0, 0, 0);
     rect(this.loc.x, this.loc.y, 20, 20);
   }
-
+//dead function
   this.dead = function(){
     for(var i = 0; i < this.segments.length; i++){
       var distX = this.loc.x - this.segments[i].x;
