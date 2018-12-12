@@ -70,19 +70,19 @@ function loadFood(numFood){
 //directions I move with arrow keys
 function keyPressed(){
   start = "false"
-  //up arrow
+  //up arrow key
   if(keyCode === 38){
     snake.vel = createVector(0, -20)
   }
-  //down arrow
+  //down arrow key
   if(keyCode === 40){
     snake.vel = createVector(0, 20)
   }
-  //right arrow
+  //right arrow key
   if(keyCode === 39){
     snake.vel = createVector(20, 0)
   }
-  //left arrow
+  //left arrow key
   if(keyCode === 37){
     snake.vel = createVector(-20, 0)
   }
