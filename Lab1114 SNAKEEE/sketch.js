@@ -92,8 +92,11 @@ function deadGame(){
   if(snake.status == "true"){
     snake = 0
     score = 0;
+    //game over text
+    text("You're kinda not too great at life", 400, 400);
     loadSnake();
     gameStart();
+    gameOver();
   }
 }
 //when game starts
