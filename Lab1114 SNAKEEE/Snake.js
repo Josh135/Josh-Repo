@@ -34,7 +34,7 @@ function Snake(loc, vel){
   this.render = function(){
     for(var i = 0; i < this.segments.length; i++){
       //snake color
-      fill(0, 0, 0);
+      fill(random(225), random(225), random(225));
       stroke(0, 225, 225);
       rect(this.segments[i].x, this.segments[i].y, 20, 20)
     }

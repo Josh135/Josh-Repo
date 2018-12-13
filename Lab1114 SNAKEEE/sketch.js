@@ -18,8 +18,9 @@ function setup(){
 function draw(){
   //color of background
   background(0, 225, 225);
+
+  fill(random(225), random(255), random(250));
   snake.run();
-  fill(0, 255, 25)
   textSize(30);
   //location of score
   text(score, 100, 100);
