@@ -4,6 +4,7 @@ var numSeg = 1;
 var start = "true"
 var font;
 var score = 0;
+var w;
 //setup function for code
 function setup(){
   textAlign(CENTER, CENTER);
